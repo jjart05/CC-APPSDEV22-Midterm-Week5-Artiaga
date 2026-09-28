@@ -17,6 +17,9 @@ namespace StudentRosterDbApi.Models
         [Required]
         public string Course { get; set; } = string.Empty;
 
+        [MaxLength(100)]
+        public string Email { get; set; } = string.Empty;
+
         [Required]
         [Range(1, 4, ErrorMessage = "YearLevel must be between 1 and 4.")]
         public int YearLevel { get; set; }

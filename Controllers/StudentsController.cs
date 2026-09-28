@@ -24,6 +24,18 @@ namespace StudentRosterDbApi.Controllers
             return await _context.Students.ToListAsync(); // Returns 200 OK
         }
 
+        // GET: api/students/course/BSCS
+        [HttpGet("course/{courseName}")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(string courseName)
+        {
+            var filtered = await _context.Students
+                .Where(s => s.Course.ToLower() == courseName.ToLower())
+                .OrderBy(s => s.LastName)
+                .ToListAsync();
+
+            return filtered;
+        }
+
         // GET: api/students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudentById(int id)
@@ -84,6 +96,7 @@ namespace StudentRosterDbApi.Controllers
             existingStudent.FirstName = updatedStudent.FirstName;
             existingStudent.LastName = updatedStudent.LastName;
             existingStudent.Course = updatedStudent.Course;
+            existingStudent.Email = updatedStudent.Email;
             existingStudent.YearLevel = updatedStudent.YearLevel;
 
             await _context.SaveChangesAsync();
